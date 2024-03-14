@@ -1,0 +1,20 @@
+{
+  "name": "three-journey-monorepo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "@types/three": "^0.162.0",
+    "three": "^0.162.0"
+  }
+}
