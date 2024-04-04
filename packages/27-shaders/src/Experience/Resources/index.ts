@@ -1,10 +1,9 @@
 import * as THREE from 'three'
 import { GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader'
 
 export type source = {
   name: string
-  type: 'gltfModel' | 'texture' | 'cubeTexture' | 'hdrModel'
+  type: 'gltfModel' | 'texture' | 'cubeTexture'
   path: string[] | string
 }
 
@@ -12,10 +11,9 @@ type loaders = {
   gltfLoader: GLTFLoader
   textureLoader: THREE.TextureLoader
   cubeTextureLoader: THREE.CubeTextureLoader
-  RGBELoader: RGBELoader
 }
 
-type file = THREE.CubeTexture | THREE.Texture | GLTF | RGBELoader
+type file = THREE.CubeTexture | THREE.Texture | GLTF
 
 export default class Resources extends EventTarget {
   sources: source[]
@@ -40,32 +38,15 @@ export default class Resources extends EventTarget {
     this.loaders = {
       gltfLoader: new GLTFLoader(),
       textureLoader: new THREE.TextureLoader(),
-      cubeTextureLoader: new THREE.CubeTextureLoader(),
-      RGBELoader: new RGBELoader()
+      cubeTextureLoader: new THREE.CubeTextureLoader()
     }
   }
 
   startLoading() {
-    console.log('start loading')
     if (this.loaded === this.toLoad) {
-      setTimeout(() => {
-        this.dispatchEvent(new Event('ready'))
-      })
-    }
-
-    for (const source of this.sources) {
-      if (source.type === 'hdrModel') {
-        this.loaders.RGBELoader.load(
-          source.path as string,
-          (file) => {
-            this.sourceLoaded(source, file)
-          },
-          () => {},
-          (err) => {
-            console.error(err)
-          }
-        )
-      }
+      console.log('all loaded')
+      this.dispatchEvent(new Event('ready'))
+      return
     }
 
     for (const source of this.sources) {
@@ -73,6 +54,7 @@ export default class Resources extends EventTarget {
         this.loaders.gltfLoader.load(
           source.path as string,
           (file) => {
+            // console.log('source.path', file)
             this.sourceLoaded(source, file)
           },
           () => {},
@@ -116,6 +98,7 @@ export default class Resources extends EventTarget {
     this.loaded++
 
     if (this.loaded === this.toLoad) {
+      console.log('all loaded')
       this.dispatchEvent(new Event('ready'))
     }
   }

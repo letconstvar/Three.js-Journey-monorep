@@ -53,12 +53,16 @@ export default class Experience {
   update() {
     this.camera.update()
     this.renderer.update()
+    // this.world.shaderTest?.update()
+    this.world.Sea?.update()
   }
 
   destroy() {
+    // 移除监听器
     this.sizes.removeEventListener('resize', this.resize)
     this.time.removeEventListener('tick', this.update)
 
+    // 删除场景中的物体
     this.scene.traverse((child) => {
       if (child instanceof THREE.Mesh) {
         child.geometry.dispose()
@@ -70,9 +74,11 @@ export default class Experience {
       }
     })
 
+    // 删除渲染器
     this.camera.controls.dispose()
     this.renderer.instance.dispose()
 
+    // 删除调试器
     if (this.debug.active) {
       this.debug.ui.destroy()
     }

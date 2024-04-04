@@ -36,11 +36,15 @@ export default class Environment {
   }
 
   setEnvironmentMap() {
-    this.environmentMap = {
-      intensity: 0.4,
-      texture: this.resources.items.environmentTexture as THREE.CubeTexture,
-    }
-    this.scene.environment = this.environmentMap.texture
+    // this.environmentMap = {
+    //   intensity: 0.4,
+    //   texture: this.resources.items.environmentTexture as THREE.CubeTexture,
+    // }
+    // this.scene.environment = this.environmentMap.texture
+
+    (this.resources.items.royal_esplanade as THREE.Texture).mapping = THREE.EquirectangularReflectionMapping
+    this.scene.background = this.resources.items.royal_esplanade as THREE.Texture
+    this.scene.environment = this.resources.items.royal_esplanade as THREE.Texture
 
     this.updateMaterial()
   }

@@ -33,7 +33,7 @@ export default class Experience {
     this.scene = new THREE.Scene()
     this.resources = new Resources(sources)
     this.camera = new Camera()
-    this.renderer = new Renderer()
+    this.renderer = new Renderer(true)
     this.world = new World()
 
     this.sizes.addEventListener('resize', () => {
