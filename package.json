@@ -16,5 +16,9 @@
   "dependencies": {
     "@types/three": "^0.162.0",
     "three": "^0.162.0"
+  },
+  "devDependencies": {
+    "gsap": "^3.12.5",
+    "lil-gui": "^0.19.2"
   }
 }
